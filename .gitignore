@@ -1,0 +1,26 @@
+# Secrets
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+*.egg-info/
+
+# Chroma vector store: this is a regenerated local cache, not source data.
+# kb.py seeds it automatically from data/kb_articles.json on first run
+# (see kb.get_collection()), so it doesn't need to be committed — and
+# committing it would let the checked-in DB silently drift out of sync
+# with kb_articles.json (get_collection() only seeds when the collection
+# is empty, so edits to the JSON wouldn't be reflected without re-running
+# kb.reset_kb()). Each embedding provider also gets its own collection
+# name, so this is safe to delete any time and it'll rebuild itself.
+chroma_db/
+
+# OS
+.DS_Store
+
+# Streamlit
+.streamlit/secrets.toml
