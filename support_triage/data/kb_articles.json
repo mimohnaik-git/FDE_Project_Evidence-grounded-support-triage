@@ -1,0 +1,62 @@
+[
+  {
+    "id": "billing-001",
+    "category": "billing",
+    "title": "Refund Policy",
+    "text": "Customers can request a full refund within 14 days of purchase if the product has not been substantially used. Refunds are processed to the original payment method within 5-7 business days. After 14 days, only prorated refunds are issued for annual plans, and no refunds are issued for monthly plans."
+  },
+  {
+    "id": "billing-002",
+    "category": "billing",
+    "title": "Failed Payment / Card Declined",
+    "text": "If a payment fails, we retry the charge automatically 3 times over 5 days. Customers can update their card in Account > Billing > Payment Methods. Accounts are suspended after 3 failed attempts and reactivated instantly once payment succeeds."
+  },
+  {
+    "id": "billing-003",
+    "category": "billing",
+    "title": "Cancelling a Subscription",
+    "text": "Subscriptions can be cancelled anytime from Account > Billing > Manage Subscription. Cancellation takes effect at the end of the current billing cycle; customers retain access until then. There is no cancellation fee."
+  },
+  {
+    "id": "billing-004",
+    "category": "billing",
+    "title": "Invoice and Receipts",
+    "text": "Invoices are automatically emailed after every successful charge. Customers can also download past invoices from Account > Billing > Invoice History. For custom invoice details (PO numbers, company name), contact billing-support to have a template applied."
+  },
+  {
+    "id": "technical-001",
+    "category": "technical",
+    "title": "Login Issues",
+    "text": "Common login issues are caused by expired sessions, cached cookies, or incorrect email casing. Ask the customer to clear browser cache, try an incognito window, and confirm the email is typed exactly as registered. If issues persist, check for an account lock after 5 failed attempts."
+  },
+  {
+    "id": "technical-002",
+    "category": "technical",
+    "title": "Password Reset Not Working",
+    "text": "Password reset emails can take up to 10 minutes and may land in spam. If no email arrives after 15 minutes, verify the email address exists in our system. If it does not, the customer likely signed up with a different email or via SSO (Google/Microsoft)."
+  },
+  {
+    "id": "technical-003",
+    "category": "technical",
+    "title": "App Crashing on Startup",
+    "text": "Startup crashes are usually caused by an outdated app version or corrupted local cache. Recommend updating to the latest version first. If the crash persists, ask the customer to reinstall the app, which clears local cache and config files."
+  },
+  {
+    "id": "technical-004",
+    "category": "technical",
+    "title": "Data Sync Delays",
+    "text": "Sync delays of up to 2 minutes are normal under high load. If data has not synced after 10 minutes, check the customer's internet connectivity and confirm they are on app version 4.2 or later, since sync reliability was significantly improved in that release."
+  },
+  {
+    "id": "general-001",
+    "category": "general",
+    "title": "Support Hours and Contact",
+    "text": "Support is available Monday-Friday, 9am-6pm IST via chat and email. Premium plan customers get 24/7 priority support. Average first response time is under 2 hours during business hours."
+  },
+  {
+    "id": "general-002",
+    "category": "general",
+    "title": "Company and Product Overview",
+    "text": "Our platform offers project management and collaboration tools for small teams, including task boards, file sharing, and time tracking. We offer Free, Pro, and Enterprise tiers."
+  }
+]
