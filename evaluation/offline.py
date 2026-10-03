@@ -4,8 +4,8 @@ import re
 
 import numpy as np
 
-from kb import articles
-from policy import TriageResult, relevance, tokens
+from support_triage.kb import articles
+from support_triage.policy import TriageResult, relevance, tokens
 
 
 class FakeChat:

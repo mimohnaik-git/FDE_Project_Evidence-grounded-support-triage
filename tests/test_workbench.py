@@ -4,15 +4,15 @@ from pathlib import Path
 import chromadb
 import pytest
 
-from agents import build_agents
-from embedding_config import resolve_embedding_provider
 from evaluation.adapters import adapt, sample
 from evaluation.offline import FakeChat, FakeEmbedding, fake_retrieve
-from graph import build_graph, pending_reviews, request_review, resume_review
-from kb import articles, fingerprint, get_collection, retrieve
-from llm_config import resolve_provider
-from policy import TriageResult, decision, grounded, sufficient
-from runtime import Credentials, safe_failure
+from support_triage.agents import build_agents
+from support_triage.embedding_config import resolve_embedding_provider
+from support_triage.graph import build_graph, pending_reviews, request_review, resume_review
+from support_triage.kb import articles, fingerprint, get_collection, retrieve
+from support_triage.llm_config import resolve_provider
+from support_triage.policy import TriageResult, decision, grounded, sufficient
+from support_triage.runtime import Credentials, safe_failure
 
 
 @pytest.mark.parametrize(
@@ -202,7 +202,7 @@ def test_restart_persistence(tmp_path):
 
 
 def test_grounding_failure_routes_to_review(graph, monkeypatch):
-    import agents
+    import support_triage.agents as agents
 
     monkeypatch.setattr(agents, "grounded", lambda *args: False)
     config = {"configurable": {"thread_id": "failure"}}
@@ -314,7 +314,7 @@ def test_session_credentials_do_not_escape(tmp_path, monkeypatch):
 
 
 def test_approval_rejects_stale_policy(graph, monkeypatch):
-    import kb
+    import support_triage.kb as kb
 
     config = {"configurable": {"thread_id": "stale"}}
     graph.invoke({"ticket_id": "stale", "customer_message": "refund within 14 days", "trace": []}, config)

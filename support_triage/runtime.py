@@ -16,7 +16,7 @@ class Credentials:
 
     @classmethod
     def from_environment(cls):
-        values = dotenv_values(Path(__file__).resolve().parent / ".env")
+        values = dotenv_values(Path(__file__).resolve().parent.parent / ".env")
         return cls(
             os.getenv("OPENAI_API_KEY", values.get("OPENAI_API_KEY", "")) or "",
             os.getenv("ANTHROPIC_API_KEY", values.get("ANTHROPIC_API_KEY", "")) or "",
@@ -39,5 +39,5 @@ def safe_failure(exc):
 
 
 def setting(name, default=None):
-    values = dotenv_values(Path(__file__).resolve().parent / ".env")
+    values = dotenv_values(Path(__file__).resolve().parent.parent / ".env")
     return os.getenv(name, values.get(name, default)) or default

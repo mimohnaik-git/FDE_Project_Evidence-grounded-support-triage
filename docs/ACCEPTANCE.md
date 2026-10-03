@@ -3,9 +3,10 @@
 ACCEPTANCE PASS — PORTFOLIO READY — verified implementation and post-merge GitHub Actions success.
 This does not certify production performance or live-model quality.
 
-Modified: app.py, agents.py, graph.py, kb.py, llm_config.py, embedding_config.py,
+Modified: app.py, support_triage/agents.py, support_triage/graph.py,
+support_triage/kb.py, support_triage/llm_config.py, support_triage/embedding_config.py,
 requirements.txt, .env.example, .gitignore, README.md. The policy corpus is unchanged.
-Added: policy.py, runtime.py, AUDIT.md, requirements-dev.txt, constraints.txt,
+Added: support_triage/policy.py, support_triage/runtime.py, docs/AUDIT.md, requirements-dev.txt, constraints.txt,
 pyproject.toml, tests/, evaluation/, .github/workflows/ci.yml, verification.json,
 and this report. The imported local folder initially lacked `.git`, but was
 subsequently reattached to authoritative GitHub `main @ 157fa6f`.
@@ -35,7 +36,7 @@ Native category/priority accuracy and macro-F1 are 1.0; review precision/recall/
 are 1.0; Hit@1/Hit@2/Recall@2 and evidence-supported response rate are 1.0; false-safe
 and grounding violations are zero; review rate 44.44%, automatic-draft coverage
 55.56%, assisted coverage 0% (reviews remain pending during eval).
-Native median/p95 latency and call counts are recorded in evaluation/results.json.
+Native median/p95 latency and call counts are recorded in evaluation/results/native.json.
 External category accuracy: Bitext 37.5%, CLINC 90.625%, SaaS 25%. False-safe is zero
 across final external runs. These weak fixture routing scores remain visible and
 must not be advertised as live-model metrics. SaaS priority accuracy is 12.5%.

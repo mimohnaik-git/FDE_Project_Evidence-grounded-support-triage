@@ -3,12 +3,12 @@
 import json
 from pathlib import Path
 
-from kb import articles
-from policy import relevance
+from support_triage.kb import articles
+from support_triage.policy import relevance
 
 
 def calibrate():
-    rows = json.loads(Path(__file__).with_name("calibration.json").read_text())
+    rows = json.loads((Path(__file__).parent / "datasets" / "calibration.json").read_text())
     corpus = {a["id"]: a for a in articles()}
     scores = [(relevance(r["message"], corpus[r["article_id"]]), r["sufficient"]) for r in rows]
     candidates = [0.25, 0.35, 0.45, 0.55, 0.65, 0.75]

@@ -3,7 +3,7 @@ from pathlib import Path
 import pytest
 from streamlit.testing.v1 import AppTest
 
-import graph
+import support_triage.graph as graph
 from evaluation.offline import FakeChat, fake_retrieve
 
 

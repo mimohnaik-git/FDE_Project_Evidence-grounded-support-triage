@@ -99,7 +99,7 @@ def main():
             ]
             cases = sample(adapt(source, reviewed), 8, 42)
             mapping = "Eight manually reviewed first-customer-turn cases; labels documented in SaaS review file; all require review"
-            (root / "evaluation" / "saas_labels.json").write_text(json.dumps(labels, indent=2))
+            (root / "evaluation" / "datasets" / "saas_labels.json").write_text(json.dumps(labels, indent=2))
         (generated / f"{source}.json").write_text(json.dumps(cases, indent=2), encoding="utf-8")
         manifest = dict(
             source=entry["source"],
@@ -121,7 +121,7 @@ def main():
         )
         manifests.append(manifest)
         result = run(cases)
-        (root / "evaluation" / f"results-{source}.json").write_text(
+        (root / "evaluation" / "results" / f"{source}.json").write_text(
             json.dumps(result, indent=2), encoding="utf-8"
         )
         print(source, json.dumps({k: v for k, v in result.items() if k != "case_results"}, indent=2))
@@ -129,7 +129,7 @@ def main():
     manifests.insert(
         0,
         dict(
-            source="project-native evaluation/gold.json",
+            source="project-native evaluation/datasets/gold.json",
             license="Project source; owner license choice pending",
             upstream_revision="gold-v1",
             sample_seed=None,
@@ -140,7 +140,7 @@ def main():
             raw_data_committed=True,
         ),
     )
-    (root / "evaluation" / "manifest.json").write_text(json.dumps(manifests, indent=2), encoding="utf-8")
+    (root / "evaluation" / "datasets" / "manifest.json").write_text(json.dumps(manifests, indent=2), encoding="utf-8")
 
 
 if __name__ == "__main__":

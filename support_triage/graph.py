@@ -7,10 +7,10 @@ from langgraph.checkpoint.sqlite import SqliteSaver
 from langgraph.graph import END, StateGraph
 from langgraph.types import Command
 
-from agents import TicketState, build_agents
-from policy import validate_human
+from support_triage.agents import TicketState, build_agents
+from support_triage.policy import validate_human
 
-CHECKPOINT_PATH = Path(__file__).resolve().parent / "data" / "reviews.sqlite"
+CHECKPOINT_PATH = Path(__file__).resolve().parent.parent / "data" / "reviews.sqlite"
 
 
 def build_graph(

@@ -17,7 +17,7 @@ jobs:
       - run: pip install -r requirements-dev.txt -c constraints.txt
       - run: pip check
       - run: ruff check .
-      - run: python -m compileall -q agents.py app.py graph.py kb.py policy.py runtime.py evaluation
-      - run: python -c "import graph, kb, policy"
+      - run: python -m compileall -q app.py support_triage evaluation
+      - run: python -c "import support_triage.agents, support_triage.graph, support_triage.kb, support_triage.policy, support_triage.runtime"
       - run: pytest -q
-      - run: python -m evaluation.run --output evaluation/results-ci.json
+      - run: python -m evaluation.run --output evaluation/results/ci.json

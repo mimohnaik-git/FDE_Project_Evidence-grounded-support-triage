@@ -1,6 +1,6 @@
 [
   {
-    "source": "project-native evaluation/gold.json",
+    "source": "project-native evaluation/datasets/gold.json",
     "license": "Project source; owner license choice pending",
     "upstream_revision": "gold-v1",
     "sample_seed": null,

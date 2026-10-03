@@ -4,9 +4,9 @@ import uuid
 
 import streamlit as st
 
-from embedding_config import resolve_embedding_provider
-from graph import build_graph, pending_reviews, request_review, resume_review
-from runtime import Credentials, safe_failure
+from support_triage.embedding_config import resolve_embedding_provider
+from support_triage.graph import build_graph, pending_reviews, request_review, resume_review
+from support_triage.runtime import Credentials, safe_failure
 
 st.set_page_config(page_title="Evidence-Grounded Support Triage", layout="wide")
 st.title("Evidence-Grounded Support Triage Workbench")

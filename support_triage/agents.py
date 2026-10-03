@@ -4,10 +4,18 @@ from typing import TypedDict
 
 from langgraph.types import interrupt
 
-import kb
-from embedding_config import resolve_embedding_provider
-from llm_config import get_chat_model
-from policy import TriageResult, compatible, decision, grounded, relevance, sufficient, validate_human
+from support_triage import kb
+from support_triage.embedding_config import resolve_embedding_provider
+from support_triage.llm_config import get_chat_model
+from support_triage.policy import (
+    TriageResult,
+    compatible,
+    decision,
+    grounded,
+    relevance,
+    sufficient,
+    validate_human,
+)
 
 
 class TicketState(TypedDict, total=False):

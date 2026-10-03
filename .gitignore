@@ -16,3 +16,8 @@ venv/
 evaluation/raw/
 evaluation/generated/
 .DS_Store
+
+# Evaluation outputs from CI and optional live runs
+evaluation/results/ci.json
+evaluation/results/smoke.json
+evaluation/results/live.json
