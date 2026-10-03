@@ -2,13 +2,13 @@
 
 **ACCEPTANCE PASS — PORTFOLIO READY**
 
-[![Offline verification](https://github.com/mimohnaik-git/FDE_Project_Support-Triage/actions/workflows/ci.yml/badge.svg)](https://github.com/mimohnaik-git/FDE_Project_Support-Triage/actions/workflows/ci.yml)
+[![Offline verification](https://github.com/mimohnaik-git/evidence-grounded-support-triage/actions/workflows/ci.yml/badge.svg)](https://github.com/mimohnaik-git/evidence-grounded-support-triage/actions/workflows/ci.yml)
 
-PR [#1](https://github.com/mimohnaik-git/FDE_Project_Support-Triage/pull/1) merged successfully. Post-merge GitHub Actions
-run [37110362584](https://github.com/mimohnaik-git/FDE_Project_Support-Triage/actions/runs/37110362584) completed with **SUCCESS**; 51 tests passed.
-Original authoritative baseline: `157fa6f27897772ededacef3623ad693067bb294`.
-Feature commit: `0b33ad8943cd05e370be1a36b16156f3d5ba4f5f`.
-Current `main`: `a41c0e141a5885483c950426a5d3d5cef6671198`. The imported local folder initially lacked
+PR [#1](https://github.com/mimohnaik-git/evidence-grounded-support-triage/pull/1) merged successfully. Post-merge GitHub Actions
+run [37114631585](https://github.com/mimohnaik-git/evidence-grounded-support-triage/actions/runs/37114631585) completed with **SUCCESS**.
+Baseline commit: `157fa6f27897772ededacef3623ad693067bb294`.
+Feature implementation commit: `0b33ad8943cd05e370be1a36b16156f3d5ba4f5f`.
+Implementation merge: `a41c0e141a5885483c950426a5d3d5cef6671198`. Reorganization merge: `592bafd4ea0295032310adc8ba2e99a74676f2fc`. The imported local folder initially lacked
 `.git`, then was reattached to authoritative GitHub `main @ 157fa6f`.
 Live-model quality remains unmeasured.
 
@@ -92,7 +92,7 @@ Copy-Item .env.example .env
 On Linux/macOS use `.venv/bin/python` instead. Runtime-only installation uses
 `requirements.txt`; test/eval tools use `requirements-dev.txt`. `constraints.txt` pins
 the complete accepted local environment. `pip check` passed on Python 3.12.14/Windows;
-post-merge Ubuntu GitHub Actions run `37110362584` completed successfully.
+post-reorganization GitHub Actions run `37114631585` completed successfully.
 Chroma brings some upstream transitive packages (including the Kubernetes client);
 the application introduces no Kubernetes service or other new infrastructure.
 
@@ -204,7 +204,7 @@ Lexical gates and keyword risk rules can miss semantic nuances; the six-case cal
 and small challenge samples do not establish production reliability. Automated responses
 quote policies rather than interpreting account-specific eligibility. Human edits remain
 the reviewer's responsibility. Live-provider/embedding evaluation remains unexecuted;
-post-merge hosted CI succeeded. API keys, sending responses, account actions, escalations and final decisions
+post-reorganization hosted CI run `37114631585` succeeded. API keys, sending responses, account actions, escalations and final decisions
 remain human-controlled.
 
 ## Repository metadata suggestions
@@ -213,6 +213,5 @@ Description: “Evidence-grounded support triage with LangGraph, Chroma and dura
 Topics: `langgraph`, `streamlit`, `rag`, `support-operations`, `human-in-the-loop`, `evaluation`.
 License: choose an owner-approved code license (MIT is a possible option); no license is
 assigned on your behalf. Third-party dataset licenses remain separate.
-GitHub remote: [FDE_Project_Support-Triage](https://github.com/mimohnaik-git/FDE_Project_Support-Triage).
-The CI badge above links to the configured workflow; post-merge run `37110362584` succeeded.
-This documentation reconciliation makes no commit or push.
+GitHub remote: [evidence-grounded-support-triage](https://github.com/mimohnaik-git/evidence-grounded-support-triage).
+The CI badge above links to the canonical repository workflow; post-reorganization run `37114631585` succeeded.

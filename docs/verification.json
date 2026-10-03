@@ -9,10 +9,10 @@
   "constraint_install_dry_run": "passed with --no-index in accepted local environment",
   "secret_pattern_scan": "passed",
   "scan_files": 35,
-  "ci": "SUCCESS — post-merge Ubuntu GitHub Actions run 37110362584; 51 tests passed",
+  "ci": "SUCCESS — post-reorganization GitHub Actions run 37114631585",
   "baseline": "157fa6f27897772ededacef3623ad693067bb294",
   "branch": "main",
-  "commit": "a41c0e141a5885483c950426a5d3d5cef6671198",
+  "commit": "592bafd4ea0295032310adc8ba2e99a74676f2fc",
   "kb_sha256": "334576e93fd098535a1f60fe137afa289f2e614a36957f1822248d1300e6f1c6",
   "evaluation": "18 native + 32 Bitext + 32 CLINC OOS + 8 reviewed SaaS; fake intake/retrieval only",
   "known_limits": [
@@ -23,12 +23,14 @@
     "Owner code-license choice pending"
   ],
   "recommendation": "ACCEPTANCE PASS — PORTFOLIO READY",
-  "ci_run_id": "37110362584",
-  "ci_run_url": "https://github.com/mimohnaik-git/FDE_Project_Support-Triage/actions/runs/37110362584",
+  "ci_run_id": "37114631585",
+  "ci_run_url": "https://github.com/mimohnaik-git/evidence-grounded-support-triage/actions/runs/37114631585",
   "ci_conclusion": "SUCCESS",
   "baseline_context": "Imported local folder initially lacked .git; subsequently reattached to authoritative GitHub main @ 157fa6f",
   "feature_commit": "0b33ad8943cd05e370be1a36b16156f3d5ba4f5f",
-  "remote": "https://github.com/mimohnaik-git/FDE_Project_Support-Triage.git",
+  "implementation_merge": "a41c0e141a5885483c950426a5d3d5cef6671198",
+  "reorganization_merge": "592bafd4ea0295032310adc8ba2e99a74676f2fc",
+  "remote": "https://github.com/mimohnaik-git/evidence-grounded-support-triage.git",
   "pull_request": 1,
   "pull_request_status": "merged"
 }
