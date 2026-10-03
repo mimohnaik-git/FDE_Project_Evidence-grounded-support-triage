@@ -42,8 +42,7 @@ across final external runs. These weak fixture routing scores remain visible and
 must not be advertised as live-model metrics. SaaS priority accuracy is 12.5%.
 
 Local equivalent checks pass. Python 3.12 constraints were verified on Windows,
-and the post-merge Ubuntu GitHub Actions run [37110362584](https://github.com/mimohnaik-git/FDE_Project_Support-Triage/actions/runs/37110362584)
-completed with **SUCCESS**; 51 tests passed. PR [#1](https://github.com/mimohnaik-git/FDE_Project_Support-Triage/pull/1)
+and the post-reorganization GitHub Actions run [37114631585](https://github.com/mimohnaik-git/evidence-grounded-support-triage/actions/runs/37114631585) completed with **SUCCESS**. PR [#1](https://github.com/mimohnaik-git/evidence-grounded-support-triage/pull/1)
 merged successfully. Live-model quality remains unmeasured; no paid-call result is claimed.
 
 Limitations: six-case lexical calibration; extractive responses; no live-model quality
@@ -52,8 +51,8 @@ retention policy or multi-operator concurrency guarantee. Human edits are not ma
 grounded. Sending replies and performing refunds/account actions remain human-controlled.
 Optional Twitter/BANKING77 datasets were not used. Code license remains an owner choice.
 
-GitHub remote: `https://github.com/mimohnaik-git/FDE_Project_Support-Triage.git`.
-Original authoritative baseline: `157fa6f27897772ededacef3623ad693067bb294`.
-Feature commit: `0b33ad8943cd05e370be1a36b16156f3d5ba4f5f`.
-PR #1: merged successfully. Current `main`: `a41c0e141a5885483c950426a5d3d5cef6671198`.
-This documentation reconciliation makes no commit or push.
+GitHub remote: `https://github.com/mimohnaik-git/evidence-grounded-support-triage.git`.
+Baseline commit: `157fa6f27897772ededacef3623ad693067bb294`.
+Feature implementation commit: `0b33ad8943cd05e370be1a36b16156f3d5ba4f5f`.
+Implementation merge: `a41c0e141a5885483c950426a5d3d5cef6671198`.
+Reorganization merge: `592bafd4ea0295032310adc8ba2e99a74676f2fc`.

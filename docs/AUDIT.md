@@ -4,16 +4,16 @@ Supplied path: `support_triage/data`. Actual project root: `support_triage`.
 At initial inspection, the imported local folder lacked `.git`; no local Git
 repository was found in the root or its parents. It was subsequently reattached
 to authoritative GitHub `main @ 157fa6f`, restoring the baseline/history context.
-Original authoritative baseline: `157fa6f27897772ededacef3623ad693067bb294`.
-Remote: `https://github.com/mimohnaik-git/FDE_Project_Support-Triage.git`.
-Feature commit: `0b33ad8943cd05e370be1a36b16156f3d5ba4f5f`.
-PR [#1](https://github.com/mimohnaik-git/FDE_Project_Support-Triage/pull/1) merged successfully.
-Current GitHub `main`: `a41c0e141a5885483c950426a5d3d5cef6671198`.
-Post-merge Ubuntu GitHub Actions run [37110362584](https://github.com/mimohnaik-git/FDE_Project_Support-Triage/actions/runs/37110362584):
-**SUCCESS**, with 51 tests passed.
+Baseline commit: `157fa6f27897772ededacef3623ad693067bb294`.
+Remote: `https://github.com/mimohnaik-git/evidence-grounded-support-triage.git`.
+Feature implementation commit: `0b33ad8943cd05e370be1a36b16156f3d5ba4f5f`.
+PR [#1](https://github.com/mimohnaik-git/evidence-grounded-support-triage/pull/1) merged successfully.
+Implementation merge: `a41c0e141a5885483c950426a5d3d5cef6671198`.
+Reorganization merge: `592bafd4ea0295032310adc8ba2e99a74676f2fc`.
+Post-reorganization GitHub Actions run [37114631585](https://github.com/mimohnaik-git/evidence-grounded-support-triage/actions/runs/37114631585): **SUCCESS**.
 Final recommendation: **ACCEPTANCE PASS — PORTFOLIO READY**.
 Existing evaluation metrics and limitations remain unchanged; live-model quality
-remains unmeasured. This documentation reconciliation makes no commit or push.
+remains unmeasured.
 
 Original files: `.env.example`, `.gitignore`, `agents.py`, `app.py`,
 `embedding_config.py`, `graph.py`, `kb.py`, `llm_config.py`, `README.md`,
