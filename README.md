@@ -1,5 +1,17 @@
 # Evidence-Grounded Support Triage Workbench
 
+**ACCEPTANCE PASS — PORTFOLIO READY**
+
+[![Offline verification](https://github.com/mimohnaik-git/FDE_Project_Support-Triage/actions/workflows/ci.yml/badge.svg)](https://github.com/mimohnaik-git/FDE_Project_Support-Triage/actions/workflows/ci.yml)
+
+PR [#1](https://github.com/mimohnaik-git/FDE_Project_Support-Triage/pull/1) merged successfully. Post-merge GitHub Actions
+run [37110362584](https://github.com/mimohnaik-git/FDE_Project_Support-Triage/actions/runs/37110362584) completed with **SUCCESS**; 51 tests passed.
+Original authoritative baseline: `157fa6f27897772ededacef3623ad693067bb294`.
+Feature commit: `0b33ad8943cd05e370be1a36b16156f3d5ba4f5f`.
+Current `main`: `a41c0e141a5885483c950426a5d3d5cef6671198`. The imported local folder initially lacked
+`.git`, then was reattached to authoritative GitHub `main @ 157fa6f`.
+Live-model quality remains unmeasured.
+
 A support-operations demo that classifies customer intake, chooses an owning queue,
 retrieves company policy, abstains without sufficient evidence, and persists human review.
 It addresses manual classification, misrouting, knowledge search, unsupported answers,
@@ -80,7 +92,7 @@ Copy-Item .env.example .env
 On Linux/macOS use `.venv/bin/python` instead. Runtime-only installation uses
 `requirements.txt`; test/eval tools use `requirements-dev.txt`. `constraints.txt` pins
 the complete accepted local environment. `pip check` passed on Python 3.12.14/Windows;
-the Ubuntu GitHub Actions run has not been executed from this local repository.
+post-merge Ubuntu GitHub Actions run `37110362584` completed successfully.
 Chroma brings some upstream transitive packages (including the Kubernetes client);
 the application introduces no Kubernetes service or other new infrastructure.
 
@@ -163,7 +175,7 @@ Public sources: [Bitext](https://huggingface.co/datasets/bitext/Bitext-customer-
 and [Jurgen1161 B2B SaaS dialogue sample](https://huggingface.co/datasets/Jurgen1161/synthetic-b2b-saas-support-dialogues-sample)
 (CC BY 4.0). Authors retain their respective rights. Raw third-party data and sampled
 customer text are excluded from Git; only provenance, reviewed labels and derived metrics
-are prepared for commit. Kaggle Twitter and BANKING77 are optional and were not acquired or evaluated.
+are included in the merged implementation. Kaggle Twitter and BANKING77 are optional and were not acquired or evaluated.
 
 ```powershell
 # Explicit network opt-in; pinned sources, seed 42, local ignored raw/sample files.
@@ -191,8 +203,8 @@ is an audit label, not verified identity. Local persistence scans are sized for 
 Lexical gates and keyword risk rules can miss semantic nuances; the six-case calibration
 and small challenge samples do not establish production reliability. Automated responses
 quote policies rather than interpreting account-specific eligibility. Human edits remain
-the reviewer's responsibility. Live-provider/embedding evaluation and hosted CI remain
-unexecuted. API keys, sending responses, account actions, escalations and final decisions
+the reviewer's responsibility. Live-provider/embedding evaluation remains unexecuted;
+post-merge hosted CI succeeded. API keys, sending responses, account actions, escalations and final decisions
 remain human-controlled.
 
 ## Repository metadata suggestions
@@ -201,5 +213,6 @@ Description: “Evidence-grounded support triage with LangGraph, Chroma and dura
 Topics: `langgraph`, `streamlit`, `rag`, `support-operations`, `human-in-the-loop`, `evaluation`.
 License: choose an owner-approved code license (MIT is a possible option); no license is
 assigned on your behalf. Third-party dataset licenses remain separate.
-CI badge after adding a remote: `https://github.com/OWNER/REPO/actions/workflows/ci.yml/badge.svg`.
-No GitHub remote was supplied, so there is no hosted CI status or badge claim.
+GitHub remote: [FDE_Project_Support-Triage](https://github.com/mimohnaik-git/FDE_Project_Support-Triage).
+The CI badge above links to the configured workflow; post-merge run `37110362584` succeeded.
+This documentation reconciliation makes no commit or push.
