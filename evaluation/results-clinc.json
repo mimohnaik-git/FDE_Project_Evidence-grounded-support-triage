@@ -1,0 +1,189 @@
+{
+  "mode": "offline fake intake and retrieval; workflow regression only",
+  "cases": 32,
+  "category_labeled_cases": 32,
+  "category_accuracy": 0.90625,
+  "category_macro_f1": 0.23770491803278687,
+  "priority_labeled_cases": 0,
+  "priority_accuracy": null,
+  "priority_macro_f1": null,
+  "escalation_precision": 1.0,
+  "escalation_recall": 1.0,
+  "escalation_f1": 1.0,
+  "false_safe_rate": 0.0,
+  "human_review_rate": 1,
+  "automation_coverage": 0,
+  "assisted_handling_coverage": 0.0,
+  "oos_abstention_accuracy": 1,
+  "hit_at_1": null,
+  "hit_at_2": null,
+  "recall_at_2": null,
+  "evidence_supported_response_rate": null,
+  "grounding_violations": 0,
+  "latency_median_ms": 35.63174999999319,
+  "latency_p95_ms": 51.51849999947444,
+  "llm_calls_per_run": 1,
+  "retrieval_calls_per_run": 0.0625,
+  "case_results": [
+    {
+      "id": "clinc-654",
+      "category": "escalation",
+      "review": true
+    },
+    {
+      "id": "clinc-114",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "clinc-25",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "clinc-759",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "clinc-281",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "clinc-250",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "clinc-228",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "clinc-142",
+      "category": "billing",
+      "review": true
+    },
+    {
+      "id": "clinc-754",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "clinc-104",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "clinc-692",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "clinc-758",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "clinc-913",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "clinc-558",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "clinc-89",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "clinc-604",
+      "category": "general",
+      "review": true
+    },
+    {
+      "id": "clinc-432",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "clinc-32",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "clinc-30",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "clinc-95",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "clinc-223",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "clinc-238",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "clinc-517",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "clinc-616",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "clinc-27",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "clinc-574",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "clinc-203",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "clinc-733",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "clinc-665",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "clinc-718",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "clinc-429",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "clinc-225",
+      "category": "unsupported",
+      "review": true
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "mode": "offline fake intake and retrieval; workflow regression only",
+  "cases": 18,
+  "category_labeled_cases": 18,
+  "category_accuracy": 1.0,
+  "category_macro_f1": 1.0,
+  "priority_labeled_cases": 18,
+  "priority_accuracy": 1.0,
+  "priority_macro_f1": 1.0,
+  "escalation_precision": 1.0,
+  "escalation_recall": 1.0,
+  "escalation_f1": 1.0,
+  "false_safe_rate": 0.0,
+  "human_review_rate": 0.4444444444444444,
+  "automation_coverage": 0.5555555555555556,
+  "assisted_handling_coverage": 0.0,
+  "oos_abstention_accuracy": 1,
+  "hit_at_1": 1,
+  "hit_at_2": 1,
+  "recall_at_2": 1.0,
+  "evidence_supported_response_rate": 1,
+  "grounding_violations": 0,
+  "latency_median_ms": 45.4994000001534,
+  "latency_p95_ms": 450.2281999994011,
+  "llm_calls_per_run": 1,
+  "retrieval_calls_per_run": 0.6111111111111112,
+  "case_results": [
+    {
+      "id": "refund",
+      "category": "billing",
+      "review": false
+    },
+    {
+      "id": "card",
+      "category": "billing",
+      "review": false
+    },
+    {
+      "id": "cancel",
+      "category": "billing",
+      "review": false
+    },
+    {
+      "id": "invoice",
+      "category": "billing",
+      "review": false
+    },
+    {
+      "id": "login",
+      "category": "technical",
+      "review": false
+    },
+    {
+      "id": "password",
+      "category": "technical",
+      "review": false
+    },
+    {
+      "id": "crash",
+      "category": "technical",
+      "review": false
+    },
+    {
+      "id": "sync",
+      "category": "technical",
+      "review": false
+    },
+    {
+      "id": "hours",
+      "category": "general",
+      "review": false
+    },
+    {
+      "id": "platform",
+      "category": "general",
+      "review": false
+    },
+    {
+      "id": "legal",
+      "category": "escalation",
+      "review": true
+    },
+    {
+      "id": "security",
+      "category": "escalation",
+      "review": true
+    },
+    {
+      "id": "repeated",
+      "category": "escalation",
+      "review": true
+    },
+    {
+      "id": "human",
+      "category": "escalation",
+      "review": true
+    },
+    {
+      "id": "oos1",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "oos2",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "oos3",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "unsupported_billing",
+      "category": "billing",
+      "review": true
+    }
+  ]
+}

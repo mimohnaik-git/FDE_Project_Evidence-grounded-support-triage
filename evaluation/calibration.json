@@ -1,0 +1,32 @@
+[
+  {
+    "message": "refund within 14 days of purchase",
+    "article_id": "billing-001",
+    "sufficient": true
+  },
+  {
+    "message": "password reset email spam 15 minutes",
+    "article_id": "technical-002",
+    "sufficient": true
+  },
+  {
+    "message": "support hours Monday Friday priority support",
+    "article_id": "general-001",
+    "sufficient": true
+  },
+  {
+    "message": "cryptocurrency tax advice payment deductions",
+    "article_id": "billing-002",
+    "sufficient": false
+  },
+  {
+    "message": "write poem Jupiter",
+    "article_id": "general-002",
+    "sufficient": false
+  },
+  {
+    "message": "refund for damaged refrigerator delivery",
+    "article_id": "billing-001",
+    "sufficient": false
+  }
+]

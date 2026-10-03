@@ -1,0 +1,189 @@
+{
+  "mode": "offline fake intake and retrieval; workflow regression only",
+  "cases": 32,
+  "category_labeled_cases": 32,
+  "category_accuracy": 0.375,
+  "category_macro_f1": 0.23319327731092437,
+  "priority_labeled_cases": 0,
+  "priority_accuracy": null,
+  "priority_macro_f1": null,
+  "escalation_precision": 0.12903225806451613,
+  "escalation_recall": 1.0,
+  "escalation_f1": 0.22857142857142856,
+  "false_safe_rate": 0.0,
+  "human_review_rate": 0.96875,
+  "automation_coverage": 0.03125,
+  "assisted_handling_coverage": 0.0,
+  "oos_abstention_accuracy": 1,
+  "hit_at_1": null,
+  "hit_at_2": null,
+  "recall_at_2": null,
+  "evidence_supported_response_rate": 1,
+  "grounding_violations": 0,
+  "latency_median_ms": 26.405699999486387,
+  "latency_p95_ms": 61.15270000009332,
+  "llm_calls_per_run": 1,
+  "retrieval_calls_per_run": 0.5,
+  "case_results": [
+    {
+      "id": "bitext-21379",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "bitext-4744",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "bitext-409",
+      "category": "billing",
+      "review": true
+    },
+    {
+      "id": "bitext-8426",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "bitext-7932",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "bitext-6577",
+      "category": "billing",
+      "review": true
+    },
+    {
+      "id": "bitext-5206",
+      "category": "billing",
+      "review": true
+    },
+    {
+      "id": "bitext-4599",
+      "category": "billing",
+      "review": false
+    },
+    {
+      "id": "bitext-25979",
+      "category": "billing",
+      "review": true
+    },
+    {
+      "id": "bitext-18840",
+      "category": "billing",
+      "review": true
+    },
+    {
+      "id": "bitext-4344",
+      "category": "billing",
+      "review": true
+    },
+    {
+      "id": "bitext-20577",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "bitext-15818",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "bitext-520",
+      "category": "billing",
+      "review": true
+    },
+    {
+      "id": "bitext-488",
+      "category": "billing",
+      "review": true
+    },
+    {
+      "id": "bitext-4455",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "bitext-6502",
+      "category": "billing",
+      "review": true
+    },
+    {
+      "id": "bitext-6731",
+      "category": "billing",
+      "review": true
+    },
+    {
+      "id": "bitext-18184",
+      "category": "billing",
+      "review": true
+    },
+    {
+      "id": "bitext-20766",
+      "category": "technical",
+      "review": true
+    },
+    {
+      "id": "bitext-434",
+      "category": "billing",
+      "review": true
+    },
+    {
+      "id": "bitext-20098",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "bitext-6177",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "bitext-26623",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "bitext-21550",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "bitext-26382",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "bitext-18833",
+      "category": "billing",
+      "review": true
+    },
+    {
+      "id": "bitext-15779",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "bitext-6531",
+      "category": "billing",
+      "review": true
+    },
+    {
+      "id": "bitext-16265",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "bitext-20557",
+      "category": "unsupported",
+      "review": true
+    },
+    {
+      "id": "bitext-8477",
+      "category": "unsupported",
+      "review": true
+    }
+  ]
+}

@@ -1,0 +1,166 @@
+[
+  {
+    "id": "refund",
+    "message": "What is the refund policy within 14 days of purchase?",
+    "category": "billing",
+    "priority": "medium",
+    "review": false,
+    "relevant_ids": [
+      "billing-001"
+    ]
+  },
+  {
+    "id": "card",
+    "message": "My card payment failed and was declined. How do I update payment methods?",
+    "category": "billing",
+    "priority": "medium",
+    "review": false,
+    "relevant_ids": [
+      "billing-002"
+    ]
+  },
+  {
+    "id": "cancel",
+    "message": "How do I cancel my subscription at the end of the billing cycle?",
+    "category": "billing",
+    "priority": "medium",
+    "review": false,
+    "relevant_ids": [
+      "billing-003"
+    ]
+  },
+  {
+    "id": "invoice",
+    "message": "Where can I download past invoices from invoice history?",
+    "category": "billing",
+    "priority": "medium",
+    "review": false,
+    "relevant_ids": [
+      "billing-004"
+    ]
+  },
+  {
+    "id": "login",
+    "message": "Login issues with cached cookies and incorrect email casing.",
+    "category": "technical",
+    "priority": "medium",
+    "review": false,
+    "relevant_ids": [
+      "technical-001"
+    ]
+  },
+  {
+    "id": "password",
+    "message": "My password reset email has not arrived after 15 minutes.",
+    "category": "technical",
+    "priority": "medium",
+    "review": false,
+    "relevant_ids": [
+      "technical-002"
+    ]
+  },
+  {
+    "id": "crash",
+    "message": "App crash on startup with corrupted local cache.",
+    "category": "technical",
+    "priority": "medium",
+    "review": false,
+    "relevant_ids": [
+      "technical-003"
+    ]
+  },
+  {
+    "id": "sync",
+    "message": "Data sync delays after 10 minutes. Check connectivity?",
+    "category": "technical",
+    "priority": "medium",
+    "review": false,
+    "relevant_ids": [
+      "technical-004"
+    ]
+  },
+  {
+    "id": "hours",
+    "message": "What are support hours Monday Friday and premium priority support?",
+    "category": "general",
+    "priority": "low",
+    "review": false,
+    "relevant_ids": [
+      "general-001"
+    ]
+  },
+  {
+    "id": "platform",
+    "message": "What project management tools and tiers does the platform offer?",
+    "category": "general",
+    "priority": "low",
+    "review": false,
+    "relevant_ids": [
+      "general-002"
+    ]
+  },
+  {
+    "id": "legal",
+    "message": "I want my lawyer to investigate the refund.",
+    "category": "escalation",
+    "priority": "high",
+    "review": true,
+    "relevant_ids": []
+  },
+  {
+    "id": "security",
+    "message": "Security breach: someone accessed our customer data.",
+    "category": "escalation",
+    "priority": "high",
+    "review": true,
+    "relevant_ids": []
+  },
+  {
+    "id": "repeated",
+    "message": "Third time contacting support about the same failure.",
+    "category": "escalation",
+    "priority": "high",
+    "review": true,
+    "relevant_ids": []
+  },
+  {
+    "id": "human",
+    "message": "I need a human supervisor.",
+    "category": "escalation",
+    "priority": "high",
+    "review": true,
+    "relevant_ids": []
+  },
+  {
+    "id": "oos1",
+    "message": "Write a poem about Jupiter.",
+    "category": "unsupported",
+    "priority": "low",
+    "review": true,
+    "relevant_ids": []
+  },
+  {
+    "id": "oos2",
+    "message": "What is the capital of France?",
+    "category": "unsupported",
+    "priority": "low",
+    "review": true,
+    "relevant_ids": []
+  },
+  {
+    "id": "oos3",
+    "message": "Book me a flight to London.",
+    "category": "unsupported",
+    "priority": "low",
+    "review": true,
+    "relevant_ids": []
+  },
+  {
+    "id": "unsupported_billing",
+    "message": "Give me cryptocurrency tax advice on payment deductions.",
+    "category": "billing",
+    "priority": "medium",
+    "review": true,
+    "relevant_ids": []
+  }
+]
