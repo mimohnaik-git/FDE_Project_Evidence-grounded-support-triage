@@ -9,10 +9,10 @@
   "constraint_install_dry_run": "passed with --no-index in accepted local environment",
   "secret_pattern_scan": "passed",
   "scan_files": 35,
-  "ci": "workflow added; hosted run unavailable: no remote",
-  "baseline": "imported source, no prior Git repository/HEAD",
-  "branch": "feature/evidence-grounded-triage",
-  "commit": "not created",
+  "ci": "SUCCESS — post-merge Ubuntu GitHub Actions run 37110362584; 51 tests passed",
+  "baseline": "157fa6f27897772ededacef3623ad693067bb294",
+  "branch": "main",
+  "commit": "a41c0e141a5885483c950426a5d3d5cef6671198",
   "kb_sha256": "334576e93fd098535a1f60fe137afa289f2e614a36957f1822248d1300e6f1c6",
   "evaluation": "18 native + 32 Bitext + 32 CLINC OOS + 8 reviewed SaaS; fake intake/retrieval only",
   "known_limits": [
@@ -22,5 +22,13 @@
     "Local single-operator demo; no auth/tenant isolation",
     "Owner code-license choice pending"
   ],
-  "recommendation": "READY FOR PR"
+  "recommendation": "ACCEPTANCE PASS — PORTFOLIO READY",
+  "ci_run_id": "37110362584",
+  "ci_run_url": "https://github.com/mimohnaik-git/FDE_Project_Support-Triage/actions/runs/37110362584",
+  "ci_conclusion": "SUCCESS",
+  "baseline_context": "Imported local folder initially lacked .git; subsequently reattached to authoritative GitHub main @ 157fa6f",
+  "feature_commit": "0b33ad8943cd05e370be1a36b16156f3d5ba4f5f",
+  "remote": "https://github.com/mimohnaik-git/FDE_Project_Support-Triage.git",
+  "pull_request": 1,
+  "pull_request_status": "merged"
 }

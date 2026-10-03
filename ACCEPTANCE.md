@@ -1,14 +1,15 @@
 # Acceptance report — 2026-10-03
 
-READY FOR PR — local workflow implementation and offline verification.
+ACCEPTANCE PASS — PORTFOLIO READY — verified implementation and post-merge GitHub Actions success.
 This does not certify production performance or live-model quality.
 
 Modified: app.py, agents.py, graph.py, kb.py, llm_config.py, embedding_config.py,
 requirements.txt, .env.example, .gitignore, README.md. The policy corpus is unchanged.
 Added: policy.py, runtime.py, AUDIT.md, requirements-dev.txt, constraints.txt,
 pyproject.toml, tests/, evaluation/, .github/workflows/ci.yml, verification.json,
-and this report. All files appear as additions in Git because the imported project
-had no repository or baseline commit.
+and this report. The imported local folder initially lacked `.git`, but was
+subsequently reattached to authoritative GitHub `main @ 157fa6f`.
+The authoritative baseline is `157fa6f27897772ededacef3623ad693067bb294`.
 
 Architecture: retained Streamlit + LangGraph + Chroma; replaced MemorySaver with
 SQLite and structured interrupts; deterministic queue/SLA rules, evidence topic
@@ -39,9 +40,10 @@ External category accuracy: Bitext 37.5%, CLINC 90.625%, SaaS 25%. False-safe is
 across final external runs. These weak fixture routing scores remain visible and
 must not be advertised as live-model metrics. SaaS priority accuracy is 12.5%.
 
-GitHub Actions is added but unexecuted remotely: no remote was supplied. The local
-equivalent checks pass. Python 3.12 constraints were verified on Windows; Ubuntu
-resolution is left to the first hosted run. No paid calls, push, PR or merge occurred.
+Local equivalent checks pass. Python 3.12 constraints were verified on Windows,
+and the post-merge Ubuntu GitHub Actions run [37110362584](https://github.com/mimohnaik-git/FDE_Project_Support-Triage/actions/runs/37110362584)
+completed with **SUCCESS**; 51 tests passed. PR [#1](https://github.com/mimohnaik-git/FDE_Project_Support-Triage/pull/1)
+merged successfully. Live-model quality remains unmeasured; no paid-call result is claimed.
 
 Limitations: six-case lexical calibration; extractive responses; no live-model quality
 measurement; no production authentication, verified reviewer identity, tenant isolation,
@@ -49,5 +51,8 @@ retention policy or multi-operator concurrency guarantee. Human edits are not ma
 grounded. Sending replies and performing refunds/account actions remain human-controlled.
 Optional Twitter/BANKING77 datasets were not used. Code license remains an owner choice.
 
-Git: feature/evidence-grounded-triage; no prior HEAD; verified files prepared in the
-index for review; no commit created and no remote configured.
+GitHub remote: `https://github.com/mimohnaik-git/FDE_Project_Support-Triage.git`.
+Original authoritative baseline: `157fa6f27897772ededacef3623ad693067bb294`.
+Feature commit: `0b33ad8943cd05e370be1a36b16156f3d5ba4f5f`.
+PR #1: merged successfully. Current `main`: `a41c0e141a5885483c950426a5d3d5cef6671198`.
+This documentation reconciliation makes no commit or push.
