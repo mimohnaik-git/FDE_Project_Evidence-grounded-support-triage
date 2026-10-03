@@ -1,4 +1,4 @@
-from runtime import Credentials, setting
+from support_triage.runtime import Credentials, setting
 
 DEFAULT_MODELS = {"openai": "text-embedding-3-small", "local": "all-MiniLM-L6-v2"}
 

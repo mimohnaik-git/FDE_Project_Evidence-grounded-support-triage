@@ -10,13 +10,13 @@ from pathlib import Path
 from sklearn.metrics import accuracy_score, f1_score, precision_recall_fscore_support
 
 from evaluation.offline import FakeChat, fake_retrieve
-from graph import build_graph
+from support_triage.graph import build_graph
 
 
 def run(
     cases=None, chat=None, retriever=None, mode="offline fake intake and retrieval; workflow regression only"
 ):
-    cases = cases or json.loads(Path(__file__).with_name("gold.json").read_text())
+    cases = cases or json.loads((Path(__file__).parent / "datasets" / "gold.json").read_text())
     outputs, latencies = [], []
     with tempfile.TemporaryDirectory() as folder:
         graph, _, _ = build_graph(
@@ -101,7 +101,7 @@ def run(
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--output", type=Path, default=Path("evaluation/results.json"))
+    parser.add_argument("--output", type=Path, default=Path("evaluation/results/native.json"))
     parser.add_argument("--cases", type=Path)
     parser.add_argument("--live", action="store_true", help="Explicit opt-in: may use paid APIs")
     parser.add_argument("--provider", choices=["auto", "openai", "anthropic", "ollama"], default="auto")
@@ -110,9 +110,9 @@ if __name__ == "__main__":
     args = parser.parse_args()
     cases = json.loads(args.cases.read_text()) if args.cases else None
     if args.live:
-        import kb
-        from llm_config import get_chat_model
-        from runtime import Credentials
+        from support_triage import kb
+        from support_triage.llm_config import get_chat_model
+        from support_triage.runtime import Credentials
 
         credentials = Credentials.from_environment()
         chat, provider, model = get_chat_model(args.provider, args.model, credentials=credentials)

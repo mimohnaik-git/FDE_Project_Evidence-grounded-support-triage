@@ -1,6 +1,6 @@
 """Resolve existing provider options with explicitly injected credentials."""
 
-from runtime import Credentials, setting
+from support_triage.runtime import Credentials, setting
 
 DEFAULT_MODELS = {"openai": "gpt-4o-mini", "anthropic": "claude-haiku-4-5-20251001", "ollama": "llama3.1"}
 

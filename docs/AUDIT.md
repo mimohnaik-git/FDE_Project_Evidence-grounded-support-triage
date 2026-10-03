@@ -17,7 +17,8 @@ remains unmeasured. This documentation reconciliation makes no commit or push.
 
 Original files: `.env.example`, `.gitignore`, `agents.py`, `app.py`,
 `embedding_config.py`, `graph.py`, `kb.py`, `llm_config.py`, `README.md`,
-`requirements.txt`, `data/kb_articles.json`.
+`requirements.txt`, and `data/kb_articles.json`. The core modules have since
+moved under `support_triage/`.
 
 Original requirements: Streamlit >=1.37,<2; LangGraph >=0.2.20,<2;
 langchain-openai/anthropic/ollama >=0.2,<2; Chroma >=0.5.5,<2;

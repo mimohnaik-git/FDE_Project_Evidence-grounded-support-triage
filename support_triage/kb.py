@@ -6,9 +6,9 @@ from pathlib import Path
 
 import chromadb
 
-from embedding_config import get_embedding_function
+from support_triage.embedding_config import get_embedding_function
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent
 KB_JSON_PATH = ROOT / "data" / "kb_articles.json"
 CHROMA_PATH = ROOT / "chroma_db"
 

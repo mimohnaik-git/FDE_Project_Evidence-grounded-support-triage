@@ -98,7 +98,7 @@ def validate_human(value, state):
         raise ValueError("Only a grounded draft can be approved; edit or reject this case")
     if item.action == "approve":
         # A pending checkpoint may predate a KB policy change.
-        from kb import articles
+        from support_triage.kb import articles
 
         corpus = {a["id"]: a["text"] for a in articles()}
         hits = state.get("kb_hits", [])

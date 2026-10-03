@@ -20,7 +20,7 @@ and inconsistent handoffs. No measured claim of real operational cost or time sa
 ## Architecture and workflow
 
 The existing Python 3.12, Streamlit, LangGraph and Chroma stack is retained.
-Business logic lives in `agents.py`, `policy.py`, `graph.py`, and `kb.py`; `app.py` is the operator UI.
+Business logic lives in `support_triage/agents.py`, `support_triage/policy.py`, `support_triage/graph.py`, and `support_triage/kb.py`; `app.py` is the operator UI.
 
 ```mermaid
 flowchart TD
@@ -116,9 +116,9 @@ All customer/model output uses Streamlit text rendering rather than unsafe HTML.
 ```powershell
 .\.venv\Scripts\python.exe -m pip check
 .\.venv\Scripts\python.exe -m ruff check .
-.\.venv\Scripts\python.exe -m compileall -q agents.py app.py graph.py kb.py policy.py runtime.py evaluation
+.\.venv\Scripts\python.exe -m compileall -q app.py support_triage evaluation
 .\.venv\Scripts\python.exe -m pytest -q
-.\.venv\Scripts\python.exe -m evaluation.run --output evaluation/results-ci.json
+.\.venv\Scripts\python.exe -m evaluation.run --output evaluation/results/smoke.json
 ```
 
 Local verification: **51 tests passed**, with three upstream Chroma fixture-configuration deprecation warnings.
@@ -130,7 +130,7 @@ Streamlit/asyncio. CI installs packages normally, then runs deterministic offlin
 
 These are **executed workflow regression results with fake intake and lexical retrieval**,
 not evidence that a live LLM or embedding model achieves these accuracies.
-Full results include all requested metrics and denominators in `evaluation/results*.json`.
+Full results include all requested metrics and denominators in `evaluation/results/*.json`.
 
 | Acceptance metric | Project-native gold (18 cases) |
 |---|---:|
@@ -165,9 +165,9 @@ No unsupported metric is filled with an invented score.
 
 ## Data provenance and reproducing external challenges
 
-`evaluation/gold.json` is the authoritative project-native acceptance set.
-`evaluation/calibration.json` is separate evidence calibration data.
-`evaluation/manifest.json` records licenses, exact upstream revisions, seeds, row counts,
+`evaluation/datasets/gold.json` is the authoritative project-native acceptance set.
+`evaluation/datasets/calibration.json` is separate evidence calibration data.
+`evaluation/datasets/manifest.json` records licenses, exact upstream revisions, seeds, row counts,
 mapping purposes, raw/sample hashes and whether raw data is committed.
 
 Public sources: [Bitext](https://huggingface.co/datasets/bitext/Bitext-customer-support-llm-chatbot-training-dataset)
@@ -183,14 +183,14 @@ are included in the merged implementation. Kaggle Twitter and BANKING77 are opti
 # Repeat preparation/evaluation from already-downloaded files, without network.
 .\.venv\Scripts\python.exe -m evaluation.prepare
 # Optional LIVE evaluation; may incur provider/embedding costs. Never run in CI.
-.\.venv\Scripts\python.exe -m evaluation.run --live --provider ollama --embedding-provider local --output evaluation/results-live.json
+.\.venv\Scripts\python.exe -m evaluation.run --live --provider ollama --embedding-provider local --output evaluation/results/live.json
 ```
 
 Adapters copy only the customer instruction (Bitext), OOS utterance (CLINC), or first
 customer dialogue turn (SaaS) into graph input. Category/priority/reference IDs remain
 evaluation labels. Agent replies, outcome sentiment, resolution summaries and later
 turns are never exposed at intake. SaaS labels are explicitly reviewed from initial
-requests and documented in `evaluation/saas_labels.json`; they do not copy upstream
+requests and documented in `evaluation/datasets/saas_labels.json`; they do not copy upstream
 post-conversation escalation metadata. Third-party material cannot override company policy.
 
 ## Limits and human control
