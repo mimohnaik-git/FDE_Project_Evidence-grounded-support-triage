@@ -1,129 +1,66 @@
-"""
-kb.py
-Chroma DB setup for the Customer Support Triage demo.
+"""Chroma index versioned by source content, provider and embedding model."""
 
-- Creates/loads a persistent Chroma collection at ./chroma_db
-- Seeds it with sample knowledge-base articles (data/kb_articles.json) on first run
-- Exposes retrieve() for the specialist agents to pull relevant context
-
-Which embedding model is used (paid OpenAI vs free local) is decided by
-embedding_config.py. Each provider gets its own collection name so
-switching providers never mixes incompatible embedding vectors together.
-"""
-
+import hashlib
 import json
-import os
+from pathlib import Path
 
 import chromadb
 
 from embedding_config import get_embedding_function
 
-CHROMA_PATH = os.path.join(os.path.dirname(__file__), "chroma_db")
-KB_JSON_PATH = os.path.join(os.path.dirname(__file__), "data", "kb_articles.json")
+ROOT = Path(__file__).resolve().parent
+KB_JSON_PATH = ROOT / "data" / "kb_articles.json"
+CHROMA_PATH = ROOT / "chroma_db"
 
 
-def _get_client():
-    return chromadb.PersistentClient(path=CHROMA_PATH)
+def articles(path=KB_JSON_PATH):
+    rows = json.loads(Path(path).read_text(encoding="utf-8"))
+    if len({a["id"] for a in rows}) != len(rows):
+        raise ValueError("Duplicate KB identifiers")
+    return rows
 
 
-def get_collection(provider: str | None = None):
-    """Return the Chroma collection for the resolved embedding provider,
-    seeding it with KB articles if empty."""
-    embedding_fn, provider_name, model_name = get_embedding_function(provider)
-    collection_name = f"support_kb_{provider_name}"
+def fingerprint(rows):
+    canonical = json.dumps(sorted(rows, key=lambda a: a["id"]), sort_keys=True, ensure_ascii=False)
+    return hashlib.sha256(canonical.encode()).hexdigest()
 
-    client = _get_client()
+
+def get_collection(provider=None, credentials=None, *, client=None, embedding=None, source=KB_JSON_PATH):
+    fn, resolved, model = embedding or get_embedding_function(provider, credentials)
+    rows = articles(source)
+    version = fingerprint(rows)
+    identity = hashlib.sha256(f"{resolved}:{model}:{version}".encode()).hexdigest()[:24]
+    client = client if client is not None else chromadb.PersistentClient(path=str(CHROMA_PATH))
     collection = client.get_or_create_collection(
-        name=collection_name,
-        embedding_function=embedding_fn,
+        name=f"support_{identity}",
+        embedding_function=fn,
+        metadata={
+            "source_fingerprint": version,
+            "provider": resolved,
+            "model": model,
+            "hnsw:space": "cosine",
+        },
     )
-
-    if collection.count() == 0:
-        with open(KB_JSON_PATH, "r") as f:
-            articles = json.load(f)
-
-        try:
-            collection.add(
-                ids=[a["id"] for a in articles],
-                documents=[a["text"] for a in articles],
-                metadatas=[{"category": a["category"], "title": a["title"]} for a in articles],
-            )
-        except Exception as exc:
-            _raise_friendly_embedding_error(provider_name, exc)
-
+    # Upsert also repairs an interrupted/partial seed. Immutable version names avoid stale content.
+    if collection.count() != len(rows):
+        collection.upsert(
+            ids=[a["id"] for a in rows],
+            documents=[a["text"] for a in rows],
+            metadatas=[{"title": a["title"], "category": a["category"]} for a in rows],
+        )
     return collection
 
 
-def _raise_friendly_embedding_error(provider_name: str, exc: Exception) -> None:
-    if provider_name == "local":
-        raise RuntimeError(
-            "Couldn't download the free local embedding model (needs one-time internet "
-            "access to chroma-onnx-models.s3.amazonaws.com, then works offline). If this "
-            "network blocks that host, set EMBEDDING_PROVIDER=openai and supply an "
-            f"OPENAI_API_KEY instead. Original error: {exc}"
-        ) from exc
-    raise RuntimeError(f"Embedding call failed for provider '{provider_name}': {exc}") from exc
-
-
-def retrieve(query: str, category: str | None = None, k: int = 2, provider: str | None = None):
-    """
-    Retrieve top-k relevant KB snippets for a query, optionally filtered by category
-    ('billing', 'technical', 'general').
-
-    Returns a list of dicts: {"title": ..., "text": ..., "category": ..., "score": ...}
-    """
-    collection = get_collection(provider)
-    where_filter = {"category": category} if category else None
-
-    try:
-        results = collection.query(
-            query_texts=[query],
-            n_results=k,
-            where=where_filter,
+def retrieve(query, category=None, k=2, provider=None, credentials=None, **options):
+    collection = get_collection(provider, credentials, **options)
+    result = collection.query(
+        query_texts=[query],
+        n_results=min(k, collection.count()),
+        where={"category": category} if category else None,
+    )
+    return [
+        dict(id=i, text=text, title=meta["title"], category=meta["category"], distance=distance)
+        for i, text, meta, distance in zip(
+            result["ids"][0], result["documents"][0], result["metadatas"][0], result["distances"][0]
         )
-    except Exception as exc:
-        _raise_friendly_embedding_error(resolve_active_provider(provider), exc)
-
-    hits = []
-    docs = results.get("documents", [[]])[0]
-    metas = results.get("metadatas", [[]])[0]
-    dists = results.get("distances", [[]])[0] if results.get("distances") else [None] * len(docs)
-
-    for doc, meta, dist in zip(docs, metas, dists):
-        hits.append(
-            {
-                "title": meta.get("title", ""),
-                "text": doc,
-                "category": meta.get("category", ""),
-                "score": dist,
-            }
-        )
-    return hits
-
-
-def resolve_active_provider(provider: str | None = None) -> str:
-    _, provider_name, _ = get_embedding_function(provider)
-    return provider_name
-
-
-def reset_kb(provider: str | None = None):
-    """Utility to wipe and re-seed the collection (useful during development)."""
-    _, provider_name, _ = get_embedding_function(provider)
-    client = _get_client()
-    try:
-        client.delete_collection(f"support_kb_{provider_name}")
-    except Exception:
-        pass
-    return get_collection(provider)
-
-
-if __name__ == "__main__":
-    # Quick manual test: python kb.py
-    from dotenv import load_dotenv
-
-    load_dotenv()
-    col = get_collection()
-    provider_name = resolve_active_provider()
-    print(f"Collection for provider '{provider_name}' has {col.count()} documents.")
-    for hit in retrieve("my card keeps getting declined", category="billing"):
-        print(f"- [{hit['title']}] {hit['text'][:80]}...")
+    ]

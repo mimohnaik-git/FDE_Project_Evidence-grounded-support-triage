@@ -1,0 +1,55 @@
+[
+  {
+    "source": "project-native evaluation/gold.json",
+    "license": "Project source; owner license choice pending",
+    "upstream_revision": "gold-v1",
+    "sample_seed": null,
+    "upstream_rows": 18,
+    "sample_rows": 18,
+    "purpose": "Authoritative workflow acceptance",
+    "mapping": "Hand-authored intake labels and KB IDs",
+    "raw_data_committed": true
+  },
+  {
+    "source": "https://huggingface.co/datasets/bitext/Bitext-customer-support-llm-chatbot-training-dataset",
+    "license": "cdla-sharing-1.0",
+    "upstream_revision": "430d1a89bd93bd1fa23c16f29dd53e73f0087443",
+    "sample_seed": 42,
+    "upstream_rows": 26872,
+    "sample_rows": 32,
+    "purpose": "Routing robustness",
+    "mapping": "Selected explicit Bitext intent mappings in adapters.py; ecommerce cancellation remains unsupported",
+    "raw_data_committed": false,
+    "sample_data_committed": false,
+    "raw_sha256": "6f81102b0100b97b8468eb04368033a23206bf1fde9d53500d5806ec1001a434",
+    "sample_sha256": "7aca4f6931016eaa71fdd9dda5e7d97c5eb1c22a9a0e5722c050c2628be58d56"
+  },
+  {
+    "source": "https://github.com/clinc/oos-eval",
+    "license": "CC-BY-3.0 (repository LICENSE)",
+    "upstream_revision": "828f8093932c8fe6ca7936c3d2e52903b1c523de",
+    "sample_seed": 42,
+    "upstream_rows": 1000,
+    "sample_rows": 32,
+    "purpose": "OOS abstention",
+    "mapping": "Only oos_test utterance text; all expected unsupported/review",
+    "raw_data_committed": false,
+    "sample_data_committed": false,
+    "raw_sha256": "36923c3705a59e08fe9c3883d8bc2dd966ef93e22cb78ac41171782a698d56e0",
+    "sample_sha256": "e34fc1da4649ba054aee89a8b33d082ffb9186097ccd30401e7b5cfa44436bf2"
+  },
+  {
+    "source": "https://huggingface.co/datasets/Jurgen1161/synthetic-b2b-saas-support-dialogues-sample",
+    "license": "cc-by-4.0",
+    "upstream_revision": "e3b2b9074db1ec6b1be6c7f894deb6f6588de15f",
+    "sample_seed": 42,
+    "upstream_rows": 100,
+    "sample_rows": 8,
+    "purpose": "Escalation and HITL challenge",
+    "mapping": "Eight manually reviewed first-customer-turn cases; labels documented in SaaS review file; all require review",
+    "raw_data_committed": false,
+    "sample_data_committed": false,
+    "raw_sha256": "19a42b2b339da88813fa2b593192b8890db6f2020dcab7e34ba3c2f336f40365",
+    "sample_sha256": "421bcd8bbdd1a378efbd7ee9321ab12e49bd8f90502b03a61d8647be59ff619f"
+  }
+]

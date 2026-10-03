@@ -1,0 +1,34 @@
+{
+  "gen-0015": [
+    "escalation",
+    "high"
+  ],
+  "gen-0312": [
+    "escalation",
+    "high"
+  ],
+  "gen-0430": [
+    "escalation",
+    "high"
+  ],
+  "gen-0002": [
+    "technical",
+    "medium"
+  ],
+  "gen-0038": [
+    "technical",
+    "medium"
+  ],
+  "gen-0157": [
+    "technical",
+    "high"
+  ],
+  "gen-0407": [
+    "technical",
+    "medium"
+  ],
+  "gen-0122": [
+    "escalation",
+    "high"
+  ]
+}

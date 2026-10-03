@@ -1,148 +1,205 @@
-# Multi-Agent Customer Support Triage (LangGraph + Streamlit)
+# Evidence-Grounded Support Triage Workbench
 
-A LangGraph pipeline that triages incoming customer support tickets:
+A support-operations demo that classifies customer intake, chooses an owning queue,
+retrieves company policy, abstains without sufficient evidence, and persists human review.
+It addresses manual classification, misrouting, knowledge search, unsupported answers,
+and inconsistent handoffs. No measured claim of real operational cost or time savings is made.
 
-```
-              ┌────────────────┐
-              │  intake_agent   │   classifies category + priority
-              └───────┬─────────┘
-                       │ (conditional routing)
-        ┌──────────────┼──────────────┬───────────────┐
-        ▼              ▼              ▼                ▼
-  billing_agent  technical_agent  general_agent   human_review_node
-        │              │              │           (graph PAUSES here —
-        │              │              │            waits for a human
-        └──────┬───────┴──────┬───────┘             supervisor's notes)
-               ▼               ▼
-               compose_agent ◄─┘
-                   │
-                  END
-```
+## Architecture and workflow
 
-Specialist agents pull grounding context from a Chroma vector DB seeded
-with sample knowledge-base articles. Escalation tickets pause the graph
-(`interrupt_before=["human_review_node"]`) until a human supervisor adds
-notes in the UI, then resume.
+The existing Python 3.12, Streamlit, LangGraph and Chroma stack is retained.
+Business logic lives in `agents.py`, `policy.py`, `graph.py`, and `kb.py`; `app.py` is the operator UI.
 
-Runs on **OpenAI, Anthropic, or a free local Ollama model** for the chat
-LLM, and on **OpenAI or a free local embedding model** for the knowledge
-base — pick whichever you have in the sidebar, or leave both on **Auto**
-and it uses whatever's available. This means the demo works in front of a
-client with zero API keys: switch both to their free/local option and it
-runs entirely offline (after a one-time local model download).
-
-```
-support_triage/
-├── app.py                # Streamlit UI (ticket input, live trace, provider picker)
-├── graph.py               # LangGraph StateGraph wiring
-├── agents.py              # State schema + all agent node functions
-├── llm_config.py           # Picks OpenAI / Anthropic / Ollama for the chat LLM
-├── embedding_config.py      # Picks OpenAI / local (free) for KB embeddings
-├── kb.py                    # Chroma DB setup + retrieval
-├── data/
-│   └── kb_articles.json     # Seed knowledge-base content
-├── requirements.txt
-├── .env.example
-├── .gitignore
-└── README.md
+```mermaid
+flowchart TD
+    UI[Streamlit operator] --> Intake[Structured LLM intake]
+    Intake --> Policy[Deterministic category / priority / queue / SLA rules]
+    Policy -->|ordinary in-scope ticket| KB[Chroma retrieval]
+    JSON[data/kb_articles.json: authoritative policies] --> Fingerprint[Source + provider + model fingerprint]
+    Fingerprint --> KB
+    KB --> Gate[Relevance and article-topic evidence gate]
+    Gate -->|sufficient| Specialist[Category specialist: cited source passages]
+    Specialist --> Check[Deterministic grounding and current-source check]
+    Check -->|passed| Compose[Deterministic greeting and sign-off]
+    Compose --> Draft[Operator draft: no automatic sending]
+    Policy -->|high risk / human request / OOS / ambiguous| Review[Structured human interrupt]
+    Gate -->|insufficient| Review
+    Check -->|failed| Review
+    Review <--> SQLite[LangGraph SQLite checkpoints]
+    Review -->|approve or edit| Compose
+    Review -->|reject| Manual[Manual handling: no customer response]
+    Draft -->|operator requests review| Review
 ```
 
-> `chroma_db/` is not committed to the repo — it's a local vector-store
-> cache that `kb.py` builds automatically from `data/kb_articles.json` the
-> first time you run the app (or `python kb.py`). This keeps the repo free
-> of binary blobs and means the KB always matches what's in the JSON file.
-> Each embedding provider gets its own collection, so switching providers
-> never mixes incompatible vectors.
+Intake uses a Pydantic schema. Deterministic rules assign category, priority,
+assigned_queue, handling_action, routing_reason, evidence_status, human_review_required,
+and a demo SLA class. SLA classes express handling order, not a promised production response time.
+Queues are billing-support, technical-support, customer-support, or support-supervisor.
+Legal/security/dispute/outage indicators override ordinary handling; human requests,
+unsupported or ambiguous categories require review.
 
-## 1. Setup (in VS Code)
+`data/kb_articles.json` remains unchanged and authoritative. Chroma collection identity
+includes a canonical SHA-256 source fingerprint and embedding provider/model, so changed
+policies get a fresh index. Retrieval preserves IDs, categories, titles, text and distances.
+Old version collections remain local caches and can be removed when no longer needed.
 
-```bash
-python -m venv venv
-source venv/bin/activate   # Windows: venv\Scripts\activate
+Evidence uses lexical coverage plus explicit article-topic anchors. The `0.35` coverage
+threshold was selected on six separate calibration cases with zero weighted errors
+(false acceptance costs five times false rejection). Distances are displayed/retained,
+but no unvalidated cross-provider distance cutoff is used. This small calibration is
+limited to the supplied English corpus. A cancellation/fee overlap regression from
+CLINC motivated the subscription-topic compatibility check.
 
-pip install -r requirements.txt
+Specialist drafts are deliberately **extractive**, retaining relevant `[article-id]`
+passages verbatim. A deterministic check rejects missing evidence, foreign IDs,
+changed source text, paraphrased or contradictory policy facts, and extra unsupported claims.
+The final composer adds only fixed greeting/sign-off text. There is no second LLM judge.
+This conservative contract trades conversational polish for verifiable policy facts.
 
-cp .env.example .env
-# then edit .env and paste your OPENAI_API_KEY or ANTHROPIC_API_KEY
-# — or skip this entirely and use the free Ollama + local-embeddings path
+## Human review
+
+SQLite checkpoints at `data/reviews.sqlite` persist tickets, evidence, interrupts and decisions.
+Restart Streamlit and select a pending review in the sidebar to recover it.
+Approve requires an existing grounded draft and unchanged current KB evidence.
+Edit requires a nonempty operator response. Reject produces no customer response and
+marks manual handling. Every decision requires a reviewer and reason; invalid submissions
+leave the review pending. Human edits are explicitly human-authored and are not labeled
+as automatically grounded. Approval, editing and rejection are covered by graph and UI tests.
+
+## Setup and run
+
+From the project root with Python 3.12:
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt -c constraints.txt
+Copy-Item .env.example .env
+.\.venv\Scripts\python.exe -m streamlit run app.py
 ```
 
-## 2. Pick your providers — pick whichever you have
+On Linux/macOS use `.venv/bin/python` instead. Runtime-only installation uses
+`requirements.txt`; test/eval tools use `requirements-dev.txt`. `constraints.txt` pins
+the complete accepted local environment. `pip check` passed on Python 3.12.14/Windows;
+the Ubuntu GitHub Actions run has not been executed from this local repository.
+Chroma brings some upstream transitive packages (including the Kubernetes client);
+the application introduces no Kubernetes service or other new infrastructure.
 
-**Chat LLM** (drives all the agent reasoning):
+Choose OpenAI, Anthropic, or a local Ollama chat model in the sidebar. Auto resolves
+OpenAI credentials first, then Anthropic credentials, then Ollama. Model overrides are
+supported. For Ollama install the server and pull the selected model before running.
+Embedding choices are OpenAI `text-embedding-3-small` or local `all-MiniLM-L6-v2`.
+Local embeddings need an initial ONNX model download, then can operate offline.
+Paid providers require your own keys and may incur charges. Provider availability and
+real-model quality have not been verified through paid calls in this build.
 
-| Provider | Cost | Setup |
-|---|---|---|
-| **OpenAI** | Paid | Set `OPENAI_API_KEY`. Default model: `gpt-4o-mini`. |
-| **Anthropic** | Paid | Set `ANTHROPIC_API_KEY`. Default model: `claude-haiku-4-5`. |
-| **Ollama** | Free, local | Install [Ollama](https://ollama.com), `ollama serve`, `ollama pull llama3.1`. No key needed. |
+Environment or `.env` credentials are read without overwriting process environment;
+sidebar keys stay in Streamlit session configuration and are never placed in graph state.
+Do not commit `.env`, Chroma caches, SQLite checkpoints, or customer ticket exports.
+User-facing failures show an opaque reference; local diagnostics retain exception type
+and stack locations without logging raw provider messages, credentials, or customer text.
+All customer/model output uses Streamlit text rendering rather than unsafe HTML.
 
-**Knowledge-base embeddings** (drives what context the specialists retrieve):
+## Offline verification and measured results
 
-| Provider | Cost | Setup |
-|---|---|---|
-| **OpenAI** | Paid | `text-embedding-3-small`. Uses the same `OPENAI_API_KEY`. |
-| **Local** | Free | `all-MiniLM-L6-v2`, runs on-device via chromadb's bundled ONNX runtime. ~80MB one-time download, then fully offline. |
-
-The sidebar shows live ✅ / ⚠️ status for every chat provider so it's
-obvious what's usable before you run a ticket. Set
-`LLM_PROVIDER=openai|anthropic|ollama` and/or
-`EMBEDDING_PROVIDER=openai|local` in `.env` to pin a choice instead of
-auto-detecting.
-
-## 3. Run the app
-
-```bash
-streamlit run app.py
+```powershell
+.\.venv\Scripts\python.exe -m pip check
+.\.venv\Scripts\python.exe -m ruff check .
+.\.venv\Scripts\python.exe -m compileall -q agents.py app.py graph.py kb.py policy.py runtime.py evaluation
+.\.venv\Scripts\python.exe -m pytest -q
+.\.venv\Scripts\python.exe -m evaluation.run --output evaluation/results-ci.json
 ```
 
-Opens `http://localhost:8501`.
+Local verification: **51 tests passed**, with three upstream Chroma fixture-configuration deprecation warnings.
 
-## 4. Demo it in class / to a client
+Tests use fake structured chat and fixed feature-hash embeddings for actual Chroma
+integration; they require no keys, downloaded models, or external network. An autouse
+socket guard blocks external connections, allowing only local sockets needed by
+Streamlit/asyncio. CI installs packages normally, then runs deterministic offline checks.
 
-1. Check the sidebar — confirm which chat + embedding providers are
-   active (or add a key / switch to the free options right there).
-2. Click a **sample ticket** in the sidebar (billing, technical, general,
-   or escalation) — or paste your own.
-3. Click **🚀 Run triage** and watch the **agent trace** render as a live
-   timeline: intake classifies it, a specialist drafts a response using
-   retrieved KB articles, and compose finalizes it.
-4. Expand **📚 Knowledge base articles used** to show exactly what
-   grounded the response — useful for a "why did it say that" conversation.
-5. Try the **escalation sample** to show the human-in-the-loop pause: the
-   graph stops before `human_review_node`, and you add supervisor notes
-   in the UI to resume it and get the final response.
-6. Click **🔄 Reset conversation** to start clean for the next demo.
+These are **executed workflow regression results with fake intake and lexical retrieval**,
+not evidence that a live LLM or embedding model achieves these accuracies.
+Full results include all requested metrics and denominators in `evaluation/results*.json`.
 
-## How the human-in-the-loop pause works
+| Acceptance metric | Project-native gold (18 cases) |
+|---|---:|
+| Category accuracy / macro-F1 | 100% / 1.000 |
+| Priority accuracy / macro-F1 | 100% / 1.000 |
+| Human-review precision / recall / F1 | 1.000 / 1.000 / 1.000 |
+| False-safe rate | 0% |
+| OOS abstention accuracy | 100% |
+| Hit@1 / Hit@2 / Recall@2 (10 evidence-labeled cases) | 100% / 100% / 100% |
+| Evidence-supported automatic response rate | 100% |
+| Grounding violations | 0 |
+| Human-review rate / automatic-draft coverage | 44.44% / 55.56% |
+| Assisted coverage | 0% (evaluation leaves reviews pending) |
+| Median / p95 workflow latency | 45.50 / 450.23 ms |
+| Intake calls / retrieval calls per run | 1 / 0.6111 |
 
-`graph.py` compiles the `StateGraph` with
-`interrupt_before=["human_review_node"]`. When a ticket is classified as
-`escalation`, `graph_app.invoke(...)` returns as soon as it reaches that
-node without running it. `app.py` checks `graph_app.get_state(config).next`
-to detect the pause, shows a notes box, then resumes with
-`graph_app.update_state(...)` followed by `graph_app.invoke(None, ...)` —
-passing `None` tells LangGraph to continue from where it left off using the
-`MemorySaver` checkpoint for that `thread_id`.
+The escalation metrics measure the binary required-review decision, including evidence
+abstention, not just the intake `escalation` category. Coverage counts drafts, not sent messages.
+Latency includes SQLite checkpointing and fake calls; it is not live API latency.
 
-**Note:** `MemorySaver` keeps checkpoints in memory only — restarting the
-Streamlit process mid-escalation-review loses that paused thread. Fine for
-a demo; for production, swap in `SqliteSaver` or `PostgresSaver`.
+| External challenge | Cases | Category accuracy / macro-F1 | False-safe | Review rate |
+|---|---:|---:|---:|---:|
+| Bitext | 32 | 37.5% / 0.233 | 0% | 96.88% |
+| CLINC OOS | 32 | 90.62% / 0.238 | 0% | 100% |
+| Reviewed B2B SaaS intake | 8 | 25.0% / 0.143 | 0% | 100% |
 
-## How provider switching works
+These weak fake-classifier routing results are retained openly. High review coverage
+on foreign-domain corpora is expected from limited company policy, and is not a productivity claim.
+Bitext and CLINC have no trustworthy mapped priority labels, so priority metrics are null.
+The reviewed SaaS priority accuracy is 12.5% (macro-F1 0.111) with this fake classifier.
+No unsupported metric is filled with an invented score.
 
-`llm_config.py` and `embedding_config.py` each resolve a provider once per
-selection and are read by `agents.py` / `kb.py` through simple factory
-functions (`build_agents()`, `get_collection()`) — no other code needs to
-know which backend is actually running. Changing either dropdown in the
-sidebar rebuilds the graph with the new backend on the next run.
+## Data provenance and reproducing external challenges
 
-## Extending the demo
+`evaluation/gold.json` is the authoritative project-native acceptance set.
+`evaluation/calibration.json` is separate evidence calibration data.
+`evaluation/manifest.json` records licenses, exact upstream revisions, seeds, row counts,
+mapping purposes, raw/sample hashes and whether raw data is committed.
 
-- **Swap MemorySaver for persistence**: use `langgraph.checkpoint.sqlite.SqliteSaver`
-  so paused escalations survive a restart.
-- **Add more KB articles**: edit `data/kb_articles.json`, then run
-  `python kb.py` or call `kb.reset_kb()` to re-seed.
-- **Add more providers**: `llm_config.py` and `embedding_config.py` are
-  intentionally small — add a branch and a default model entry for any
-  other LangChain-supported provider (Azure, Bedrock, Gemini, etc.).
+Public sources: [Bitext](https://huggingface.co/datasets/bitext/Bitext-customer-support-llm-chatbot-training-dataset)
+(CDLA Sharing 1.0), [CLINC OOS](https://github.com/clinc/oos-eval) (repository CC BY 3.0),
+and [Jurgen1161 B2B SaaS dialogue sample](https://huggingface.co/datasets/Jurgen1161/synthetic-b2b-saas-support-dialogues-sample)
+(CC BY 4.0). Authors retain their respective rights. Raw third-party data and sampled
+customer text are excluded from Git; only provenance, reviewed labels and derived metrics
+are prepared for commit. Kaggle Twitter and BANKING77 are optional and were not acquired or evaluated.
+
+```powershell
+# Explicit network opt-in; pinned sources, seed 42, local ignored raw/sample files.
+.\.venv\Scripts\python.exe -m evaluation.prepare --download
+# Repeat preparation/evaluation from already-downloaded files, without network.
+.\.venv\Scripts\python.exe -m evaluation.prepare
+# Optional LIVE evaluation; may incur provider/embedding costs. Never run in CI.
+.\.venv\Scripts\python.exe -m evaluation.run --live --provider ollama --embedding-provider local --output evaluation/results-live.json
+```
+
+Adapters copy only the customer instruction (Bitext), OOS utterance (CLINC), or first
+customer dialogue turn (SaaS) into graph input. Category/priority/reference IDs remain
+evaluation labels. Agent replies, outcome sentiment, resolution summaries and later
+turns are never exposed at intake. SaaS labels are explicitly reviewed from initial
+requests and documented in `evaluation/saas_labels.json`; they do not copy upstream
+post-conversation escalation metadata. Third-party material cannot override company policy.
+
+## Limits and human control
+
+This is a local operator demo, not a production support service. There is no account
+mutation, refund execution, email sending, authentication, tenant isolation, retention
+policy, or multi-operator concurrency guarantee. Checkpoints contain sensitive ticket data:
+secure the machine and storage before using real customer data. The UI's reviewer name
+is an audit label, not verified identity. Local persistence scans are sized for demo volume.
+Lexical gates and keyword risk rules can miss semantic nuances; the six-case calibration
+and small challenge samples do not establish production reliability. Automated responses
+quote policies rather than interpreting account-specific eligibility. Human edits remain
+the reviewer's responsibility. Live-provider/embedding evaluation and hosted CI remain
+unexecuted. API keys, sending responses, account actions, escalations and final decisions
+remain human-controlled.
+
+## Repository metadata suggestions
+
+Description: “Evidence-grounded support triage with LangGraph, Chroma and durable human review.”
+Topics: `langgraph`, `streamlit`, `rag`, `support-operations`, `human-in-the-loop`, `evaluation`.
+License: choose an owner-approved code license (MIT is a possible option); no license is
+assigned on your behalf. Third-party dataset licenses remain separate.
+CI badge after adding a remote: `https://github.com/OWNER/REPO/actions/workflows/ci.yml/badge.svg`.
+No GitHub remote was supplied, so there is no hosted CI status or badge claim.
